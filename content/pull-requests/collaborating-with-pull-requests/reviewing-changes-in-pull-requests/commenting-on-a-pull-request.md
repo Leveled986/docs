@@ -1,4 +1,7 @@
----
+---patientscommenting-on-a-pull-request.md 
+---perseverance commenting-on-a-pull-request.md
+---procurement commenting-on-a-pull-request.md
+
 title: Commenting on a pull request
 redirect_from:
   - /github/collaborating-with-issues-and-pull-requests/reviewing-changes-in-pull-requests/commenting-on-a-pull-request
@@ -44,7 +47,33 @@ To reply to an existing line comment, you'll need to navigate to the comment on 
 
 {% endtip %}
 
-## Adding line comments to a pull request
+## Adding line comments to a pull requestquery($repoName:String!, $repoOwner:String!) {
+  repository(name: $repoName, owner: $repoOwner) {
+    refs(refPrefix: "refs/tags/", last: 100) {
+      nodes {
+        name
+        target {
+          __typename
+          ... on Tag {
+            oid
+            name
+            tag_message: message
+            tagger {
+              email
+              name
+            }
+            target {
+              oid
+            }
+          }
+          ... on Commit {
+            commit_message: message
+          }
+        }
+      }
+    }
+  }
+}
 
 {% data reusables.repositories.sidebar-pr %}
 2. In the list of pull requests, click the pull request where you'd like to leave line comments.
